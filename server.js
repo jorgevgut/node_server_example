@@ -4,6 +4,34 @@ var express = require("express");
 
 var app = express();
 
+//this is sample data, assume this might come from a DataBase, files or external sources
+var data = [
+    {
+        id:1,
+        name:"John",
+        last_name:"Doe",
+        age:30
+    },
+    {
+        id:2,
+        name:"Andy",
+        last_name:"Doe",
+        age:41
+    },
+    {
+        id:3,
+        name:"Sandy",
+        last_name:"Doe",
+        age:37
+    },
+    {
+        id:4,
+        name:"Jane",
+        last_name:"Doe",
+        age:26
+    }
+];
+
 
 //root end point
 app.get("/", function (request, response) {
@@ -20,6 +48,16 @@ app.get("/person", function (request, response) {
     obj.desc = "A man who has experienced the unearthly depths of madness.."
     response.send(obj); //response is automatically send as json type of object.
 });
+
+//example json object when asking with parameter
+app.get("/person/:id", function (request, response) {
+    var obj;
+    var id = request.params.id;
+    //functional way to find within sample data
+    obj = data.filter( function(elem) {return elem.id == id;})
+    response.send(obj); //response is automatically send as json type of object.
+});
+
 
 //start express server
 app.listen(port,host);
